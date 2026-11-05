@@ -1,0 +1,136 @@
+
+@model IEnumerable<JeevanSetu.Models.Donor>
+
+@{
+    ViewData["Title"] = "All Donors";
+}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-danger">All Registered Donors</h2>
+        <a asp-controller="Donors"
+           asp-action="Register"
+           class="btn btn-danger">
+            + Register New Donor
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+
+<form asp-controller="Donors" asp-action="Index" method="get" class="row g-2 mb-4">
+    <div class="col-md-5">
+        <input type="text"
+               name="searchString"
+               class="form-control"
+               placeholder="Search by name, city, or email..."
+               value="@Context.Request.Query["searchString"]" />
+    </div>
+
+    <div class="col-md-3">
+        <select name="bloodGroup" class="form-select">
+            <option value="">All Blood Groups</option>
+            @foreach (var group in new[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" })
+            {
+                if (Context.Request.Query["bloodGroup"] == group)
+                {
+                    <option value="@group" selected>@group</option>
+                }
+                else
+                {
+                    <option value="@group">@group</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-outline-danger w-100">
+            Search / Filter
+        </button>
+    </div>
+
+    <div class="col-md-2">
+        <a asp-controller="Donors"
+           asp-action="Index"
+           class="btn btn-outline-secondary w-100">
+            Reset
+        </a>
+    </div>
+</form>
+
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="table-responsive shadow-sm">
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-danger">
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Blood Group</th>
+                        <th>City</th>
+                        <th>Date Registered</th>
+                        <th>Available</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var donor in Model)
+                    {
+                        <tr>
+                            <td>@donor.Id</td>
+                            <td>@donor.FullName</td>
+                            <td>@donor.Email</td>
+                            <td>@donor.PhoneNumber</td>
+                            <td>
+                                <span class="badge bg-danger">
+                                    @donor.BloodGroup
+                                </span>
+                            </td>
+                            <td>@donor.City</td>
+                            <td>@donor.DateRegistered.ToString("dd-MM-yyyy")</td>
+                            <td>
+                                @(donor.IsAvailable ? "Yes" : "No")
+                            </td>
+                            
+<td>
+    <a asp-action="Edit"
+       asp-route-id="@donor.Id"
+       class="btn btn-sm btn-primary mb-1">
+        Edit
+    </a>
+
+    <form asp-action="Delete"
+          asp-route-id="@donor.Id"
+          method="post"
+          class="d-inline"
+          onsubmit="return confirm('Are you sure you want to delete this donor?');">
+        <input type="hidden" name="id" value="@donor.Id" />
+        <button type="submit" class="btn btn-sm btn-danger mb-1">
+            Delete
+        </button>
+    </form>
+</td>
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No donors have been registered yet.
+        </div>
+    }
+</div>

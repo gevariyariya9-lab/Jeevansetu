@@ -1,0 +1,175 @@
+
+@using JeevanSetu.Models
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<div class="container py-4">
+
+    <!-- Dashboard Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h2 class="fw-bold text-danger mb-1">
+                <i class="bi bi-heart-pulse-fill"></i> JeevanSetu
+            </h2>
+            <p class="text-muted mb-0">Admin Dashboard | Blood Donation Management</p>
+        </div>
+
+        <a asp-controller="Donors"
+           asp-action="Register"
+           class="btn btn-danger px-4">
+            + Register Donor
+        </a>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-muted mb-2">Total Donors</p>
+                            <h2 class="fw-bold mb-0">@ViewBag.TotalDonors</h2>
+                        </div>
+                        <div class="bg-primary bg-opacity-10 text-primary rounded-3 p-3">
+                            <i class="bi bi-people-fill fs-3"></i>
+                        </div>
+                    </div>
+                    <div class="progress mt-4" style="height: 5px;">
+                        <div class="progress-bar bg-primary" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-muted mb-2">Available Donors</p>
+                            <h2 class="fw-bold text-success mb-0">@ViewBag.AvailableDonors</h2>
+                        </div>
+                        <div class="bg-success bg-opacity-10 text-success rounded-3 p-3">
+                            <i class="bi bi-check-circle-fill fs-3"></i>
+                        </div>
+                    </div>
+                    <div class="progress mt-4" style="height: 5px;">
+                        <div class="progress-bar bg-success" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <p class="text-muted mb-2">Unavailable Donors</p>
+                            <h2 class="fw-bold text-danger mb-0">@ViewBag.UnavailableDonors</h2>
+                        </div>
+                        <div class="bg-danger bg-opacity-10 text-danger rounded-3 p-3">
+                            <i class="bi bi-person-x-fill fs-3"></i>
+                        </div>
+                    </div>
+                    <div class="progress mt-4" style="height: 5px;">
+                        <div class="progress-bar bg-danger" style="width: 100%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Blood Group Summary -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-white border-0 pt-4 px-4">
+            <h5 class="fw-bold mb-1">Donors by Blood Group</h5>
+            <p class="text-muted small mb-0">Overview of registered blood groups</p>
+        </div>
+
+        <div class="card-body px-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Blood Group</th>
+                            <th>Number of Donors</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var group in ViewBag.BloodGroups)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="badge bg-danger rounded-pill px-3 py-2">
+                                        @group.BloodGroup
+                                    </span>
+                                </td>
+                                <td class="fw-semibold">@group.Count</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recently Registered Donors -->
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-header bg-white border-0 pt-4 px-4">
+            <h5 class="fw-bold mb-1">Recently Registered Donors</h5>
+            <p class="text-muted small mb-0">Latest donor registrations</p>
+        </div>
+
+        <div class="card-body px-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Blood Group</th>
+                            <th>City</th>
+                            <th>Date Registered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Donor donor in ViewBag.RecentDonors)
+                        {
+                            <tr>
+                                <td class="fw-semibold">@donor.FullName</td>
+                                <td>
+                                    <span class="badge bg-danger rounded-pill px-3 py-2">
+                                        @donor.BloodGroup
+                                    </span>
+                                </td>
+                                <td>@donor.City</td>
+                                <td>@donor.DateRegistered.ToString("dd-MM-yyyy")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Actions -->
+    <div class="d-flex flex-column flex-sm-row gap-3">
+        <a asp-controller="Donors"
+           asp-action="Index"
+           class="btn btn-danger px-4 py-2">
+            <i class="bi bi-people-fill"></i> Manage Donors
+        </a>
+
+        <a asp-controller="Donors"
+           asp-action="Register"
+           class="btn btn-outline-danger px-4 py-2">
+            <i class="bi bi-person-plus-fill"></i> Add New Donor
+        </a>
+    </div>
+
+</div>

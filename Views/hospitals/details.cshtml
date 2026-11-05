@@ -1,0 +1,28 @@
+
+@model JeevanSetu.Models.Hospital
+
+@{
+    ViewData["Title"] = "Hospital Details";
+}
+
+<div class="container mt-4">
+    <h2>Hospital Details</h2>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4 class="card-title">@Model.Name</h4>
+
+            <p><strong>Hospital ID:</strong> @Model.Id</p>
+            <p><strong>Location:</strong> @(Model.Location ?? "Not provided")</p>
+            <p>
+                <strong>Critical Status:</strong>
+                @(Model.CriticalStatus ? "Critical" : "Normal")
+            </p>
+
+            <a asp-action="Edit" asp-route-id="@Model.Id"
+               class="btn btn-warning">Edit</a>
+
+            <a asp-action="Index" class="btn btn-secondary">Back to Hospitals</a>
+        </div>
+    </div>
+</div>

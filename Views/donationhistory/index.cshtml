@@ -1,0 +1,92 @@
+
+@{
+    ViewData["Title"] = "My Donation History";
+}
+
+<div class="container py-4">
+    <div class="mb-4">
+        <h2 class="fw-bold">My Donation History</h2>
+        <p class="text-muted">
+            View your past blood donation records in one place.
+        </p>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted mb-2">Total Donations</div>
+                    <h3 class="fw-bold">—</h3>
+                    <small class="text-muted">Awaiting history integration</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted mb-2">Last Donation</div>
+                    <h3 class="fw-bold">—</h3>
+                    <small class="text-muted">No date available yet</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="text-muted mb-2">Donation Status</div>
+                    <h3 class="fw-bold">Not available</h3>
+                    <small class="text-muted">Records will be connected later</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h5 class="fw-bold mb-3">Donation Records</h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Donation Date</th>
+                            <th>Hospital / Centre</th>
+                            <th>Blood Group</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="text-center py-5">
+                                <div class="mb-3">
+                                    <span class="fs-1">🩸</span>
+                                </div>
+                                <h6>No donation history recorded yet</h6>
+                                <p class="text-muted mb-0">
+                                    Your donation records will appear here
+                                    once history integration is completed.
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="alert alert-info mb-0 mt-3">
+                <strong>Coming next:</strong>
+                Connecting this page to the donation database so donors
+                can view their actual donation history.
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-controller="Donors"
+           asp-action="Index"
+           class="btn btn-outline-primary">
+            Back to Donors
+        </a>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+
+@model JeevanSetu.Models.Hospital
+
+@{
+    ViewData["Title"] = "Add Hospital";
+}
+
+<div class="container mt-4">
+    <h2>Add New Hospital</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Hospital Name</label>
+            <input asp-for="Name" class="form-control"
+                   placeholder="Enter hospital name" required />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Location" class="form-label">Location</label>
+            <input asp-for="Location" class="form-control"
+                   placeholder="Enter hospital location" />
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="CriticalStatus" class="form-check-input" />
+            <label asp-for="CriticalStatus" class="form-check-label">
+                Critical Status
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save Hospital</button>
+        <a asp-action="Index" class="btn btn-secondary">Back</a>
+    </form>
+</div>

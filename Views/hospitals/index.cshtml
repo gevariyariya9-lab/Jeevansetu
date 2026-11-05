@@ -1,0 +1,111 @@
+
+@model IEnumerable<JeevanSetu.Models.Hospital>
+
+@{
+    ViewData["Title"] = "Hospitals";
+}
+
+<div class="container mt-4">
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Hospital Management</h2>
+
+        <a asp-action="Create" class="btn btn-primary">
+            + Add Hospital
+        </a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Hospital Name</th>
+                    <th>Location</th>
+                    <th>Critical Status</th>
+                    <th>Login Account</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var hospital in Model)
+                    {
+                        <tr>
+                            <td>@hospital.Id</td>
+                            <td>@hospital.Name</td>
+                            <td>@hospital.Location</td>
+
+                            <td>
+                                @if (hospital.CriticalStatus)
+                                {
+                                    <span class="badge bg-danger">Critical</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-success">Normal</span>
+                                }
+                            </td>
+
+                            <td>
+                                @if (hospital.HasAccount)
+                                {
+                                    <span class="badge bg-success">Created</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-secondary">Not Created</span>
+                                }
+                            </td>
+
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                    <a asp-action="Details"
+                                       asp-route-id="@hospital.Id"
+                                       class="btn btn-info btn-sm">
+                                        View
+                                    </a>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@hospital.Id"
+                                       class="btn btn-warning btn-sm">
+                                        Edit
+                                    </a>
+
+                                    <a asp-action="CreateAccount"
+                                       asp-route-id="@hospital.Id"
+                                       class="btn btn-success btn-sm">
+                                        @(hospital.HasAccount ? "Update Login" : "Create Login")
+                                    </a>
+
+                                    <a asp-action="Delete"
+                                       asp-route-id="@hospital.Id"
+                                       class="btn btn-danger btn-sm">
+                                        Delete
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No hospitals found.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

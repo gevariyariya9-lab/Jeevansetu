@@ -1,0 +1,82 @@
+
+@model JeevanSetu.Models.LoginViewModel
+
+@{
+    ViewData["Title"] = "Login - JeevanSetu";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h2 class="text-center mb-2">JeevanSetu</h2>
+                <p class="text-center text-muted">
+                    Blood Donation Management System
+                </p>
+
+                <h4 class="mb-3">Sign In</h4>
+
+                <form asp-controller="Account" asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+
+                    <div asp-validation-summary="All"
+                         class="text-danger mb-3"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="Role" class="form-label">
+                            Login As
+                        </label>
+                        <select asp-for="Role" class="form-select" required>
+                            <option value="Donor">Donor</option>
+                            <option value="Hospital">Hospital Staff</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Username" class="form-label">
+                            Username / Email
+                        </label>
+                        <input asp-for="Username"
+                               class="form-control"
+                               autocomplete="username"
+                               required />
+                        <small class="text-muted">
+                            Admin: enter your username.
+                            Hospital Staff: enter the username provided by the Admin.
+                            Donor: enter your registered email address.
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label">
+                            Password
+                        </label>
+                        <input asp-for="Password"
+                               type="password"
+                               class="form-control"
+                               autocomplete="current-password"
+                               required />
+                    </div>
+
+                    <button type="submit" class="btn btn-danger w-100">
+                        Login
+                    </button>
+                </form>
+
+                <hr />
+
+                <p class="text-center mb-0">
+                    New donor?
+                    <a asp-controller="Donors" asp-action="Register">
+                        Create an account
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

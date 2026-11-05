@@ -1,0 +1,21 @@
+# .NET build files
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Environment and secrets
+.env
+.env.*
+secrets.json
+
+# User-specific files
+*.user
+*.suo

@@ -1,0 +1,34 @@
+
+@model JeevanSetu.Models.Hospital
+
+@{
+    ViewData["Title"] = "Edit Hospital";
+}
+
+<div class="container mt-4">
+    <h2>Edit Hospital</h2>
+
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Hospital Name</label>
+            <input asp-for="Name" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Location" class="form-label">Location</label>
+            <input asp-for="Location" class="form-control" />
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="CriticalStatus" class="form-check-input" />
+            <label asp-for="CriticalStatus" class="form-check-label">
+                Critical Status
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Hospital</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,25 @@
+
+@{
+    ViewData["Title"] = "Registration Successful";
+}
+
+<div class="container mt-5 text-center">
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <h2 class="text-success">Donor Registered Successfully!</h2>
+
+    <p>Thank you for registering as a blood donor with JeevanSetu.</p>
+
+    <a asp-controller="Donors"
+       asp-action="Register"
+       class="btn btn-primary">
+        Register Another Donor
+    </a>
+
+</div>

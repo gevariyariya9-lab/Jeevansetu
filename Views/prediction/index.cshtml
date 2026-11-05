@@ -1,0 +1,107 @@
+
+@model JeevanSetu.Services.MlPredictionRequest
+
+@{
+    ViewData["Title"] = "Blood Donation Prediction";
+    var result = ViewBag.Result as JeevanSetu.Services.MlPredictionResponse;
+}
+
+<div class="container py-4">
+    <h2 class="mb-2">Blood Donation Prediction</h2>
+
+    <p class="text-muted">
+        Enter historical blood donation details to get a model prediction.
+    </p>
+
+    <div class="alert alert-warning" role="alert">
+        This model predicts a historical donation outcome from the dataset.
+        It does not determine current donor availability or medical eligibility.
+    </div>
+
+    <form asp-controller="Prediction"
+          asp-action="Index"
+          method="post"
+          class="card card-body shadow-sm">
+
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="All"
+             class="text-danger mb-3"></div>
+
+        <div class="mb-3">
+            <label asp-for="Recency" class="form-label">
+                Recency (months since last donation)
+            </label>
+            <input asp-for="Recency"
+                   type="number"
+                   min="0"
+                   class="form-control"
+                   required />
+            <span asp-validation-for="Recency" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Frequency" class="form-label">
+                Frequency (number of previous donations)
+            </label>
+            <input asp-for="Frequency"
+                   type="number"
+                   min="1"
+                   class="form-control"
+                   required />
+            <span asp-validation-for="Frequency" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Monetary" class="form-label">
+                Monetary (total blood volume in cc)
+            </label>
+            <input asp-for="Monetary"
+                   type="number"
+                   min="0"
+                   class="form-control"
+                   required />
+            <div class="form-text">
+                For this dataset, Monetary must equal Frequency × 250.
+            </div>
+            <span asp-validation-for="Monetary" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Time" class="form-label">
+                Time (months since first donation)
+            </label>
+            <input asp-for="Time"
+                   type="number"
+                   min="1"
+                   class="form-control"
+                   required />
+            <span asp-validation-for="Time" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Predict
+        </button>
+    </form>
+
+    @if (result != null)
+    {
+        <div class="card card-body shadow-sm mt-4">
+            <h4>Prediction Result</h4>
+
+            <p>
+                <strong>Predicted class:</strong>
+                @result.Prediction
+            </p>
+
+            <p>
+                <strong>Model probability for class 1:</strong>
+                @result.Probability.ToString("P2")
+            </p>
+
+            <p>@result.Meaning</p>
+
+            <small class="text-muted">@result.Notice</small>
+        </div>
+    }
+</div>
